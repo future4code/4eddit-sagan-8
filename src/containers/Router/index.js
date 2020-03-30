@@ -3,11 +3,9 @@ import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import LoginPage from "../LoginPage";
 
-
-
-
-const routes = {
-  root: "/"
+export const routes = {
+  root: "/",
+  login: "/login"
   // Outras rotas aqui
 };
 
@@ -15,7 +13,8 @@ function Router(props) {
   return (
     <ConnectedRouter history={props.history}>
       <Switch>
-        <Route path={routes.root} component={LoginPage} />
+        <Route path={routes.root} component={LoginPage} /> 
+        <Route path={routes.login} component={LoginPage} />
       </Switch>
     </ConnectedRouter>
   );
