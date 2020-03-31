@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import { Typography, Paper } from "@material-ui/core";
 import styled from "styled-components";
 import { routes } from "../Router"
+import { doLogin } from "../../actions/user/login"
 
 const LoginWrapper = styled.form`
   margin-top: 12px;
@@ -37,7 +38,7 @@ class LoginPage extends Component {
   
   componentDidMount() {
     if (this.props.isLogged) {
-      this.props.goTo(routes.root)
+      this.props.goTo(routes.postFeed)
     }
   }
 
@@ -101,7 +102,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  doLogin: (form) => { console.log(form) }, //dispatch(doLogin(form)),
+  doLogin: (form) => dispatch(doLogin(form)),
   goTo: (url) => dispatch(push(url)),
 })
 
