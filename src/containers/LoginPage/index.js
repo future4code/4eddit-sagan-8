@@ -98,7 +98,7 @@ class LoginPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isLogged: false //state.auth.user
+  isLogged: state.user.token,
 })
 
 const mapDispatchToProps = (dispatch) => ({
