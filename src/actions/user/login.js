@@ -8,7 +8,7 @@ export const doLogin = user => async(dispatch) =>{
     try{
         const response = await axios.post(`${baseUrl}/login`, user)
         alert("Bem-vindo!")
-        //dispatch(setUser(user))
+        dispatch(setUser(response.data))
         dispatch(push("/postfeed"))
 
     }catch (error) {
