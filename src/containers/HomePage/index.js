@@ -1,7 +1,9 @@
-import React, {Component} from 'react'
-import styled from 'styled-components'
+import React, {Component} from 'react';
+import styled from 'styled-components';
 
-import { Button } from '@material-ui/core'
+import { Button } from '@material-ui/core';
+import { connect } from "react-redux";
+import { push } from 'connected-react-router';
 
 const HomePageWrapper = styled.div`
   padding: 20px;
@@ -20,7 +22,17 @@ const Logo = styled.img`
   margin-bottom:50px;
 `
 
+
 class HomePage extends Component{
+
+    handleClickLogin = () =>{
+        this.props.login()
+    };
+
+    handleClickRegister = () =>{
+        this.props.register()
+    };
+
     render(){
         return(
             <HomePageWrapper>
@@ -30,6 +42,7 @@ class HomePage extends Component{
                         color={"secondary"}
                         variant="outlined"
                         style={{ margin: "15px" }}
+                        onClick={this.handleClickLogin}
                     >
                         Login
                     </Button>
@@ -37,6 +50,7 @@ class HomePage extends Component{
                         color={"secondary"}
                         variant="contained"
                         style={{ margin: "15px" }}
+                        onClick={this.handleClickRegister}
                      >
                         Cadastro
                     </Button>
@@ -46,4 +60,10 @@ class HomePage extends Component{
         )
     }
 }
-export default HomePage
+
+const mapDispatchToProps = (dispatch) => ({
+    login: () => dispatch(push("/login")),
+    register: () => dispatch(push("/register"))
+});
+
+export default connect(null, mapDispatchToProps)(HomePage)
