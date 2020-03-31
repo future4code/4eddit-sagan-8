@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
-import { routes } from "../Router"
+import {registerNewUser} from "../actions/register";
 
 import { Button, TextField, Typography, Paper } from '@material-ui/core';
 
@@ -27,9 +27,9 @@ const RegisterWrapper = styled.form`
 
 const createRegisterInputs = [
     {name: "username", type: "text", label: "Nome de Usuário", required: true, pattern: "[a-zA-Z0-9 ]{5,}", title: "Letras Maiúsculas, Minúsculas e Números - Mínimo 5 caracteres"},
-    {name: "email", type: "text", label: "E-mail", required: true, pattern: "[a-zA-Z0-9 ]{5,}", title: "Letras Maiúsculas, Minúsculas e Números - Mínimo 5 caracteres"},
+    {name: "email", type: "text", label: "E-mail", required: true, pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$", title: "Insira um email válido"},
     {name: "password", type: "text", label: "Senha", required: true, pattern: "[a-zA-Z0-9 ]{5,}", title: "Letras Maiúsculas, Minúsculas e Números - Mínimo 5 caracteres"},
-]
+];
 
 class RegisterPage extends Component{
     constructor(props){
@@ -45,7 +45,7 @@ class RegisterPage extends Component{
 
     handleOnSubmit = event =>{
         event.preventDefault();
-        this.props.postFeed();
+        this.props.registerNewUser(this.state.user)
     }
 
     handleInputChange = event => {
@@ -95,9 +95,8 @@ class RegisterPage extends Component{
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    postFeed: () => dispatch(push(routes.postFeed))
-
-})
+    registerNewUser: (user) => dispatch(registerNewUser((user)))
+});
 
 
 export default  connect(null, mapDispatchToProps)(RegisterPage)
