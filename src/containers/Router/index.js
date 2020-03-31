@@ -3,6 +3,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import LoginPage from "../LoginPage";
 import RegisterPage from "../RegisterPage";
+import HomePage from "../HomePage";
+import PostFeed from "../PostFeed/PostFeed";
 
 
 
@@ -20,9 +22,9 @@ function Router(props) {
     <ConnectedRouter history={props.history}>
       <Switch>
 
-        <Route exact path={routes.root} component={LoginPage} />
+        <Route exact path={routes.root} component={HomePage} />
         <Route exact path={routes.registerPage} component={RegisterPage} />
-        <Route exact path={routes.postFeed} component={LoginPage} />         
+        <Route exact path={routes.postFeed} component={PostFeed} />
         <Route exact path={routes.login} component={LoginPage} />
 
       </Switch>
