@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import Header from "../Header";
 
 import { Button } from '@material-ui/core';
 import { connect } from "react-redux";
 import { push } from 'connected-react-router';
+
 
 const HomePageWrapper = styled.div`
   padding: 20px;
@@ -36,6 +38,7 @@ class HomePage extends Component{
     render(){
         return(
             <HomePageWrapper>
+                <Header />
                 <Logo src={require("../../img/Logo4eddit.jpeg")}/>
                 <div>
                     <Button
