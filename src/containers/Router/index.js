@@ -23,11 +23,10 @@ function Router(props) {
   return (
     <ConnectedRouter history={props.history}>
       <Switch>
-
         <Route exact path={routes.root} component={HomePage} />
         <Route exact path={routes.registerPage} component={RegisterPage} />
         <Route exact path={routes.postFeed} component={PostFeed} />
-        <Route exact path={routes.LoginPage} component={LoginPage} />
+        <Route exact path={routes.login} component={LoginPage} />
         <Route exact path={routes.PostDetail} component={PostDetail} />
       </Switch>
     </ConnectedRouter>

@@ -1,3 +1,5 @@
+import React from 'react';
+
 class PostComments extends React.Component {
   constructor(props) {
     super(props);
