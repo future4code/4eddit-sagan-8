@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
+import { MuiThemeProvider, CssBaseline,} from "@material-ui/core";
 import theme from "../../style/theme";
 import Router from "../Router";
 import { createBrowserHistory } from "history";
@@ -9,6 +9,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { generateReducers } from "../../reducers";
 import { routerMiddleware } from "connected-react-router";
 import Header from "../Header";
+import Snackbar from './snackbar'
+
 
 export const history = createBrowserHistory();
 
@@ -25,6 +27,7 @@ export const App = () => (
   <Provider store={store}>
       <MuiThemeProvider theme={theme}>
       <Header />
+      <Snackbar />
       <CssBaseline />
       <Router history={history} />
       {/*TODO O ideal é colocar o router dentro de um styled, assim,
