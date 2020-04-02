@@ -8,8 +8,10 @@ export const doLogin = user => async(dispatch) =>{
     try{
         const response = await axios.post(`${baseUrl}/login`, user)
         alert("Bem-vindo!")
-        dispatch(setUser(response.data))
-        dispatch(push("/postfeed"))
+        dispatch(setUser(response.data));
+        dispatch(push("/postfeed"));
+        const token = response.data.token;
+        window.localStorage.setItem("token", token)
 
     }catch (error) {
         alert("Ops, algo deu errado!")
