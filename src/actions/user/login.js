@@ -12,9 +12,7 @@ export const doLogin = user => async(dispatch) =>{
         dispatch(setUser(response.data));
         const token = response.data.token;
         window.localStorage.setItem("token", token)
-
         dispatch(push("/postfeed"));
-        //TODO Mover logica do token no localstorage para setUser ou entao para o reducer
 
     }catch (error) {
         alert("Ops, algo deu errado!")

@@ -14,11 +14,13 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CommentIcon from '@material-ui/icons/Comment';
 import PostComments from './PostComments'
+import { FormHelperText } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: '20vmin auto', //TODO Ajustar margin do componente
-    maxWidth: 345, //TODO Ajustar max-width do componente
+    margin: '100px auto',
+    maxWidth: '80%',
+    width: '400px',
   },
   media: {
     height: 0,
