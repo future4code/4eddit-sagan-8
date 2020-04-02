@@ -26,10 +26,6 @@ justify-content:space-between;
 
 const Logo = styled.img`
     height:8vh;
-    max-height:60px;
-    height:4vh;
-    width:4vw;
-    margin-top:10px;
 `;
 
 class Header extends React.Component{

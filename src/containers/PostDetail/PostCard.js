@@ -17,8 +17,9 @@ import PostComments from './PostComments'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: '20vmin auto', //TODO Ajustar margin do componente
-    maxWidth: 345, //TODO Ajustar max-width do componente
+    margin: '100px auto',
+    maxWidth: '80%',
+    width: '400px',
   },
   media: {
     height: 0,
