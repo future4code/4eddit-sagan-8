@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
 import {connect} from "react-redux";
-import {fetchPosts} from "../../actions/posts/createPost";
+import {fetchPosts, votePost} from "../../actions/posts/posts";
 
 import CardHeader from "@material-ui/core/CardHeader";
 import {CardContent, Typography} from "@material-ui/core";
@@ -39,6 +39,28 @@ class GridPosts extends Component{
         this.props.fetchPosts()
     }
 
+    handleLike = (direction,id) => {
+        const result = this.props.posts.find(dir =>
+            dir.id === id
+        );
+        if(result.userVoteDirection === 1){
+            this.props.votePost(0,id)
+        }else{
+            this.props.votePost(direction,id)
+        }
+    };
+
+    handleDislike = (direction,id)=>{
+        const result = this.props.posts.find(dir =>
+            dir.id === id
+        );
+      if(result.userVoteDirection === -1){
+          this.props.votePost(0,id)
+      }else{
+          this.props.votePost(direction,id)
+      }
+    };
+
     render(){
         return(
             <div>
@@ -55,9 +77,11 @@ class GridPosts extends Component{
                                  <Typography variant="h6">{post.title}</Typography>
                                  <CardContent children={post.text} />
                                  <VotesWrapper>
-                                     <ArrowUpwardIcon />
+                                     <ArrowUpwardIcon color={post.userVoteDirection === 1 ? "secondary" : ""}
+                                         onClick={() => this.handleLike(1,post.id)} />
                                      <span>{post.votesCount}</span>
-                                     <ArrowDownwardIcon  />
+                                     <ArrowDownwardIcon color={post.userVoteDirection === -1 ? "primary" : ""}
+                                         onClick={() => this.handleDislike(-1,post.id)} />
                                      <CommentWrapper>
                                      <CommentIcon />
                                      <span>{post.commentsCount} </span>
@@ -67,7 +91,6 @@ class GridPosts extends Component{
                         </CardWrapper>
                     )
                 })}
-
             </div>
         )
     }
@@ -81,7 +104,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        fetchPosts: () => dispatch(fetchPosts())
+        fetchPosts: () => dispatch(fetchPosts()),
+        votePost: (direction, id) => dispatch(votePost(direction,id))
     }
 };
 
