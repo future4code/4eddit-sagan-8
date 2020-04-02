@@ -25,8 +25,10 @@ export const fetchPosts = () => async(dispatch, getState) =>{
     const response = await axios.get(`${baseUrl}`,{
         headers:{auth:token}
     });
+    console.log("Resp",response.data.posts);
     dispatch(setListPosts(response.data.posts));
 };
+
 
 const setListPosts = (posts) => ({
     type: 'SET_POSTS',

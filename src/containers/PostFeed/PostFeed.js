@@ -86,6 +86,7 @@ class PostFeed extends Component{
                     </FormNewPost>
                     <Button color="primary" variant="contained" type={"submit"} onClick={this.handleClick} >Criar Post</Button>
                     <GridPosts />
+
                 </PostFeedWrapper>
             </div>
         )

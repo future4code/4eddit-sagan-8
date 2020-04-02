@@ -12,7 +12,6 @@ export const doLogin = user => async(dispatch) =>{
         dispatch(push("/postfeed"));
         const token = response.data.token;
         window.localStorage.setItem("token", token)
-
     }catch (error) {
         alert("Ops, algo deu errado!")
         console.error("Erro ->", error.message)
