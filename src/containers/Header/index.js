@@ -14,25 +14,35 @@ const HeaderWrapper = styled.header`
     height:8vh;
     width:100vw; 
     display:flex;
-    justify-content: space-between;   
+    justify-content: space-between; 
+    align-content: center;
+    padding: 0 2vw;  
 `
+
+const Search = styled.div `
+display:flex;
+align-items:center;
+justify-content:space-between;
+`
+
 const Logo = styled.img`
-    height:4vh;
-    width:6vw;
-    margin-top:15px;
+    height:8vh;
+    max-height:60px;
     border-radius:10%;
+    align-self: center;
 `
 
 class Header extends React.Component{
-
     render(){
         return(
             <HeaderWrapper>
-                <Logo src={require("../../img/Logo4eddit.jpeg")} />
+                <Logo src={require("../../img/Icon4eddit.png")} />
+                <Search>
                 <TextField
                     id="input-with-icon-textfield"
                     label="Buscar"
                     variant="filled"
+                    size="small"
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -42,7 +52,7 @@ class Header extends React.Component{
                     }}
                 />
                 <MenuHeader />
-                <div />
+                </Search>
             </HeaderWrapper>
         )
     }

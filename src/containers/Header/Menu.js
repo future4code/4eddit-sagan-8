@@ -9,7 +9,7 @@ export default function MenuHeader() {
         <PopupState variant="popover" popupId="demo-popup-menu">
             {(popupState) => (
                 <React.Fragment>
-                    <Button variant="contained" color="primary" {...bindTrigger(popupState)}>
+                    <Button variant="contained" color="primary" size="small" style={{marginLeft:"1vw"}} {...bindTrigger(popupState)}>
                         Open Menu
                     </Button>
                     <Menu {...bindMenu(popupState)}>
