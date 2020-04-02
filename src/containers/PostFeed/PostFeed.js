@@ -5,7 +5,7 @@ import GridPosts from "./GridPosts";
 import {connect} from "react-redux";
 import { push } from 'connected-react-router';
 import {routes} from "../Router";
-import {createNewPost} from "../../actions/posts/createPost";
+import {createNewPost} from "../../actions/posts/posts";
 
 import {TextField, Button} from "@material-ui/core";
 
