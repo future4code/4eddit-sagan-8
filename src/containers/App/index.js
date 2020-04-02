@@ -27,6 +27,9 @@ export const App = () => (
       <Header />
       <CssBaseline />
       <Router history={history} />
+      {/*TODO O ideal é colocar o router dentro de um styled, assim,
+        todos os componentes por ser alinhados de forma uniforme 
+      */}
     </MuiThemeProvider>
   </Provider>
 );

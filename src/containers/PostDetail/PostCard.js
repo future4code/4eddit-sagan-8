@@ -17,7 +17,8 @@ import PostComments from './PostComments'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    margin: '20vmin auto', //TODO Ajustar margin do componente
+    maxWidth: 345, //TODO Ajustar max-width do componente
   },
   media: {
     height: 0,
@@ -38,11 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// TODO O Export default deve acontecer apos conectar o componente ao redux
+export default function RecipeReviewCard() {// TODO Adicionar props no parametro da function
 
-
-
-
-export default function RecipeReviewCard() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -50,17 +49,46 @@ export default function RecipeReviewCard() {
     setExpanded(!expanded);
   };
 
+  //TODO Criar uma const vinda da props.post via description 
+  // Ex: const { myProp } = props
+
+  // TODO Usar referencia deste json
+  /*
+  {
+   "post":{
+      "comments":[
+         {
+            "votesCount":0,
+            "userVoteDirection":0,
+            "id":"LGFVplqhBcJ1yzOhN3Uf",
+            "username":"vinicius",
+            "text":"buenos dias",
+            "createdAt":1585748175082
+         }
+      ],
+      "votesCount":0,
+      "userVoteDirection":0,
+      "commentsNumber":1,
+      "id":"AvrNAJxtsq6vrslQ0gbL",
+      "username":"darvas",
+      "text":"asdasdasdasdasdas",
+      "createdAt":1580328992711,
+      "title":"Titulo!"
+   }
+}
+  */
+
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
           <img 
           src={UserIcon}
-          width="80%"
+          height="auto"
           />
           
         }
-        title="" //{post.title}
+        title="" //TODO Colocar os devidos conteudos conforme json do exemplo como {post.title}  
         subheader= "" //{`/r/${123+5}`}
       />
       <CardContent>
@@ -69,10 +97,11 @@ export default function RecipeReviewCard() {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="vote up">
+        <IconButton aria-label="vote up"> {/* TODO Adicionar funcao de votacao(+1) no onClick */}
           <ArrowUpwardIcon/>
         </IconButton>
-        <IconButton aria-label="vote down">
+        {/* TODO Adicionar contador de votos */}
+        <IconButton aria-label="vote down"> {/* TODO Adicionar funcao de votacao(-1) no onClick  */}
           <ArrowDownwardIcon />
         </IconButton>
         <IconButton
@@ -83,14 +112,19 @@ export default function RecipeReviewCard() {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <CommentIcon />
+          <CommentIcon /> {/* TODO Usar um Badge(mui) com o total de comentarios */}
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <PostComments />
+          <PostComments /> {/* TODO adicionar uma prop para passar o array de comentarios  */}
         </CardContent>
       </Collapse>
     </Card>
   );
 }
+
+/* TODO Conectar o componente à store via connect(null, fn1)(PostCard),
+  sendo null o mapper de state to props (o post ja vem preenchido em props.post)
+  sendo fn2 uma funcao para mapear o dispatch de votação(up, down) para o post
+*/
