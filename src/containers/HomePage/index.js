@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import Header from "../Header";
 
 import { Button } from '@material-ui/core';
 import { connect } from "react-redux";
 import { push } from 'connected-react-router';
-
 
 const HomePageWrapper = styled.div`
   padding: 20px;
@@ -22,8 +20,7 @@ const Logo = styled.img`
   width: 80vw;
   border-radius:10%;
   margin-bottom:50px;
-`
-
+`;
 
 class HomePage extends Component{
 
@@ -38,7 +35,6 @@ class HomePage extends Component{
     render(){
         return(
           <div>
-          <Header />
             <HomePageWrapper>
                 <Logo src={require("../../img/Logo4eddit.jpeg")}/>
                 <div>

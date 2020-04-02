@@ -8,6 +8,7 @@ import { createBrowserHistory } from "history";
 import { createStore, applyMiddleware, compose } from "redux";
 import { generateReducers } from "../../reducers";
 import { routerMiddleware } from "connected-react-router";
+import Header from "../Header";
 
 export const history = createBrowserHistory();
 
@@ -22,7 +23,8 @@ const store = createStore(generateReducers(history), compose(...middlewares));
 
 export const App = () => (
   <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
+      <Header />
+      <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Router history={history} />
     </MuiThemeProvider>
