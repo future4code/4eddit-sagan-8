@@ -23,10 +23,13 @@ const store = createStore(generateReducers(history), compose(...middlewares));
 
 export const App = () => (
   <Provider store={store}>
-      <Header />
       <MuiThemeProvider theme={theme}>
+      <Header />
       <CssBaseline />
       <Router history={history} />
+      {/*TODO O ideal é colocar o router dentro de um styled, assim,
+        todos os componentes por ser alinhados de forma uniforme 
+      */}
     </MuiThemeProvider>
   </Provider>
 );
