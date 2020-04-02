@@ -14,7 +14,8 @@ export const registerNewUser = user => async(dispatch) =>{
 
         const response = await axios.post(`${baseUrl}`, newUser);
         alert("Usuário criado com sucesso!!");
-        dispatch(setUser(response.data));
+        dispatch(setUser(response.data)); 
+        // TODO Aqui tambem é necessário setar o token no localstorage, por isso é bom mover a logica para setUser ou reducer
         dispatch(push("/postfeed"));
 
     }catch (error) {
