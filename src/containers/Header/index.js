@@ -9,8 +9,8 @@ import SearchIcon from '@material-ui/icons/Search';
 const HeaderWrapper = styled.header`
     position:fixed;
     top:0;
-    background:black;
-    height:6vh;
+    background:#f5f5f5;
+    height:8vh;
     width:100vw; 
     display:flex;
     justify-content: space-between; 
