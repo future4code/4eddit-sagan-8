@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // TODO O Export default deve acontecer apos conectar o componente ao redux
-export default function RecipeReviewCard() {// TODO Adicionar props no parametro da function
+export default function RecipeReviewCard(props) {// TODO Adicionar props no parametro da function
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -49,6 +49,7 @@ export default function RecipeReviewCard() {// TODO Adicionar props no parametro
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const { post } = props
 
   //TODO Criar uma const vinda da props.post via description 
   // Ex: const { myProp } = props
@@ -83,23 +84,23 @@ export default function RecipeReviewCard() {// TODO Adicionar props no parametro
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <img 
-          src={UserIcon}
-          height="auto"
+          <img
+            src={UserIcon}
+            height="auto"
           />
-          
+
         }
-        title="" //TODO Colocar os devidos conteudos conforme json do exemplo como {post.title}  
-        subheader= "" //{`/r/${123+5}`}
+        title={post.title} 
+        subheader={post.username} 
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        {/* {post.text} */}
+          {post.text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="vote up"> {/* TODO Adicionar funcao de votacao(+1) no onClick */}
-          <ArrowUpwardIcon/>
+          <ArrowUpwardIcon />
         </IconButton>
         {/* TODO Adicionar contador de votos */}
         <IconButton aria-label="vote down"> {/* TODO Adicionar funcao de votacao(-1) no onClick  */}
