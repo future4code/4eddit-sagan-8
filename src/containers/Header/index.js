@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 const HeaderWrapper = styled.header`
     position:fixed;
     top:0;
-    background:#f5f5f5;
+    background:black;
     height:6vh;
     width:100vw; 
     display:flex;
