@@ -25,7 +25,6 @@ export const fetchPosts = () => async(dispatch, getState) =>{
     const response = await axios.get(`${baseUrl}`,{
         headers:{auth:token}
     });
-    console.log("Resp",response.data.posts);
     dispatch(setListPosts(response.data.posts));
 };
 
@@ -36,3 +35,18 @@ const setListPosts = (posts) => ({
         postList: posts
     }
 });
+
+export const votePost = (direction, id) => async(dispatch)=>{
+  try{
+      console.log(direction);
+      const token = localStorage.getItem('token');
+      await axios.put(`${baseUrl}/${id}/vote`, {
+          "direction": direction
+      }, {
+          headers:{auth:token}
+      });
+      dispatch(fetchPosts())
+  }catch(error){
+      console.error("Erro ->", error.message)
+  }
+};
