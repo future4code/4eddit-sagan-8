@@ -37,8 +37,9 @@ class HomePage extends Component{
 
     render(){
         return(
+          <div>
+          <Header />
             <HomePageWrapper>
-                <Header />
                 <Logo src={require("../../img/Logo4eddit.jpeg")}/>
                 <div>
                     <Button
@@ -59,7 +60,7 @@ class HomePage extends Component{
                     </Button>
                 </div>
             </HomePageWrapper>
-
+            </div>
         )
     }
 }
