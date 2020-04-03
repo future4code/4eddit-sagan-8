@@ -2,6 +2,7 @@ import axios from 'axios';
 import { push } from 'connected-react-router';
 import { setUser } from './actionCreators'
 import { alertOpen } from './snackbar'
+import { routes } from '../../containers/Router';
 
 const baseUrl = "https://us-central1-future-apis.cloudfunctions.net/fourEddit";
 
@@ -19,3 +20,9 @@ export const doLogin = user => async(dispatch) =>{
 
     }
 };
+
+export const doLogout = () => dispatch => {
+  window.localStorage.removeItem("token")
+  dispatch(setUser({}))
+  dispatch(push(routes.root))
+} 

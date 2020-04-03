@@ -2,7 +2,6 @@ const initialState = {
     posts:[],
     currentPost: {},
     loading:""
-
 };
 
 export const allPosts = (state = initialState, action) => {
@@ -13,9 +12,16 @@ export const allPosts = (state = initialState, action) => {
         ...state,
         posts: action.payload.postList,
         loading: false
+        posts: action.payload.postList.sort((a, b) => b.createdAt - a.createdAt)
       }
         ;
     case "SET_POST":
+      const { post } = action.payload
+      const { comments } = post
+      if (comments) {
+        comments.sort((a, b) => b.createdAt - a.createdAt)
+        post.comments = comments
+      }
       return {
         ...state,
         currentPost: action.payload.post

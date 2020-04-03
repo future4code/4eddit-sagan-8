@@ -49,7 +49,6 @@ class PostFeed extends Component{
             title:"",
             text:""
         });
-        this.props.fetchPosts()
     };
 
     handleChangeTitle = (event) =>{
