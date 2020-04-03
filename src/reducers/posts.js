@@ -1,6 +1,7 @@
 const initialState = {
     posts:[],
     currentPost: {},
+    loading:""
 
 };
 
@@ -10,7 +11,8 @@ export const allPosts = (state = initialState, action) => {
     case "SET_POSTS":
       return {
         ...state,
-        posts: action.payload.postList
+        posts: action.payload.postList,
+        loading: false
       }
         ;
     case "SET_POST":

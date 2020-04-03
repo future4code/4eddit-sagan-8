@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'styled-components';
 import GridPosts from "./GridPosts";
-import {TextField, Button} from "@material-ui/core";
+import {Input, Button} from "@material-ui/core";
 import {connect} from "react-redux";
 import { push } from 'connected-react-router';
 import {routes} from "../Router";
 import {createNewPost, fetchPosts} from "../../actions/posts/posts";
-
-import {Input} from "@material-ui/core";
-
+import Loading from "../Loading";
 
 const PostFeedWrapper = styled.div`
   padding: 20px;
@@ -33,6 +31,7 @@ class PostFeed extends Component{
         this.state = {
                 title: "",
                 text: "",
+                loading: false,
         }
     }
 
@@ -41,6 +40,7 @@ class PostFeed extends Component{
         if(token === null){
             this.props.login()
         }
+        this.handleLoading()
     }
 
     handleCreatePost = () => {
@@ -64,9 +64,18 @@ class PostFeed extends Component{
         })
     };
 
+    handleLoading = () => {
+      if(this.props.loading === 'false'){
+          this.setState({loading: this.props.loading})
+      }
+    };
+
     render(){
         return(
                 <PostFeedWrapper>
+                    {<Loading
+                        open={this.state.loading}
+                        />}
                     <FormNewPost>
                         <Input
                             onChange={this.handleChangeTitle}
@@ -94,10 +103,14 @@ class PostFeed extends Component{
     }
 }
 
+const mapStateToProps = (state) => ({
+    loading: state.loading
+});
+
 const mapDispatchToProps = (dispatch) =>({
     createNewPost: (text, title) => dispatch(createNewPost(text, title)),
     fetchPosts: () => dispatch(fetchPosts),
     login: () => dispatch(push(routes.login)),
 });
 
-export default connect(null, mapDispatchToProps)(PostFeed)
+export default connect(mapStateToProps, mapDispatchToProps)(PostFeed)
