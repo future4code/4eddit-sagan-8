@@ -63,8 +63,8 @@ class GridPosts extends Component{
                 <CardList>
                 {this.props.posts.map(post => {
                     return(
-                        <CardWrapper>
-                            <Card className={classes.root} key={post.id} >
+                        <CardWrapper key={post.id}>
+                            <Card className={classes.root} >
                               <div style={{cursor: 'pointer'}} onClick={() => this.props.goToDetail(post.id)}>
                                 <CardHeader
                                     avatar={<img src={UserIcon} height="auto" alt={post.username} />}
