@@ -11,8 +11,11 @@ import UserIcon from "../../img/Icon4eddit.png";
 import PostActions from "../PostFeed/CardActions";
 import {withStyles} from "@material-ui/core/styles";
 
-const CardWrapper = styled.div`
-    
+const CardWrapper = styled.div`    
+`;
+
+const Title = styled.div`
+    margin-top:30px;
 `;
 
 const useStyles = ((theme) => ({
@@ -49,7 +52,9 @@ class GridPosts extends Component{
         const {classes} = this.props;
         return(
             <div>
-                <Typography variant="h4" style={{textAlign: "center"}}>Posts Populares</Typography>
+                <Title>
+                    <Typography variant="h4" style={{textAlign: "center"}}>Posts Populares</Typography>
+                </Title>
                 {this.props.posts.map(post => {
                     return(
                         <CardWrapper onClick={() => this.props.goToDetail(post.id)}>

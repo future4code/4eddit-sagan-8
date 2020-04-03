@@ -8,7 +8,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CommentIcon from '@material-ui/icons/Comment';
 import styled from 'styled-components'
 import { connect } from 'react-redux';
-import {goToPostDetail, votePost} from '../../../actions/posts/detail';
+import {votePost} from '../../../actions/posts/detail';
 
 const Votes = styled.div`
   font-size: 0.8rem;
