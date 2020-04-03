@@ -77,10 +77,10 @@ class GridPosts extends Component{
                                  <Typography variant="h6">{post.title}</Typography>
                                  <CardContent children={post.text} />
                                  <VotesWrapper>
-                                     <ArrowUpwardIcon color={post.userVoteDirection === 1 ? "secondary" : ""}
+                                     <ArrowUpwardIcon color={post.userVoteDirection === 1 ? "secondary" : "inherit"}
                                          onClick={() => this.handleLike(1,post.id)} />
                                      <span>{post.votesCount}</span>
-                                     <ArrowDownwardIcon color={post.userVoteDirection === -1 ? "primary" : ""}
+                                     <ArrowDownwardIcon color={post.userVoteDirection === -1 ? "primary" : "inherit"}
                                          onClick={() => this.handleDislike(-1,post.id)} />
                                      <CommentWrapper>
                                      <CommentIcon />
