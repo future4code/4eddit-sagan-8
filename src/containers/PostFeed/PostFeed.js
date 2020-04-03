@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import styled from 'styled-components';
 import GridPosts from "./GridPosts";
-
+import {TextField, Button} from "@material-ui/core";
 import {connect} from "react-redux";
 import { push } from 'connected-react-router';
 import {routes} from "../Router";
 import {createNewPost, fetchPosts} from "../../actions/posts/posts";
 
 import {Button, Input} from "@material-ui/core";
+
 
 const PostFeedWrapper = styled.div`
   padding: 20px;
