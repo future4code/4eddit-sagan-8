@@ -36,11 +36,11 @@ class PostFeed extends Component{
     }
 
     componentDidMount() {
-        const token = window.localStorage.getItem("token");
-        if(token === null){
+        if(!this.props.isLogged){
             this.props.login()
+        } else {
+          this.handleLoading()
         }
-        this.handleLoading()
     }
 
     handleCreatePost = () => {
@@ -104,7 +104,8 @@ class PostFeed extends Component{
 }
 
 const mapStateToProps = (state) => ({
-    loading: state.loading
+    loading: state.loading,
+    isLogged: state.user.token
 });
 
 const mapDispatchToProps = (dispatch) =>({
