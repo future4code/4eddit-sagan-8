@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import {routes} from "../Router";
 import {createNewPost, fetchPosts} from "../../actions/posts/posts";
 
-import {Button, Input} from "@material-ui/core";
+import {Input} from "@material-ui/core";
 
 
 const PostFeedWrapper = styled.div`
