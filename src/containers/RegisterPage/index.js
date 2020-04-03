@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import {registerNewUser} from "../../actions/user/register";
 
 import { Button, TextField, Typography, Paper } from '@material-ui/core';
+import { routes } from '../Router';
+import { push } from 'connected-react-router';
 
 const PaperMain = styled(Paper)`
   padding: 20px;
@@ -41,6 +43,12 @@ class RegisterPage extends Component{
                 password:""
             }
         }
+    }
+
+    componentDidMount() {
+      if (this.props.isLogged) {
+        this.props.goTo(routes.postFeed)
+      }
     }
 
     handleOnSubmit = event =>{
@@ -95,8 +103,12 @@ class RegisterPage extends Component{
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    registerNewUser: (user) => dispatch(registerNewUser((user)))
+    registerNewUser: (user) => dispatch(registerNewUser((user))),
+    goTo: (url) => dispatch(push(url)),
 });
 
+const mapStateToProps = (state) => ({
+  isLogged: state.user.token,
+})
 
-export default  connect(null, mapDispatchToProps)(RegisterPage)
+export default  connect(mapStateToProps, mapDispatchToProps)(RegisterPage)
