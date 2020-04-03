@@ -1,6 +1,6 @@
 const initialState = {
-    posts:[],
-    currentPost: {},
+  posts: [],
+  currentPost: {},
 
 };
 
@@ -10,10 +10,16 @@ export const allPosts = (state = initialState, action) => {
     case "SET_POSTS":
       return {
         ...state,
-        posts: action.payload.postList
+        posts: action.payload.postList.sort((a, b) => b.createdAt - a.createdAt)
       }
         ;
     case "SET_POST":
+      const { post } = action.payload
+      const { comments } = post
+      if (comments) {
+        comments.sort((a, b) => b.createdAt - a.createdAt)
+        post.comments = comments
+      }
       return {
         ...state,
         currentPost: action.payload.post

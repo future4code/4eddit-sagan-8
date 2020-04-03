@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { alertOpen } from '../user/snackbar'
 
+
 const baseUrl = "https://us-central1-future-apis.cloudfunctions.net/fourEddit/posts";
 
 export const createNewPost = (text , title) => async (dispatch) =>{
@@ -12,7 +13,8 @@ export const createNewPost = (text , title) => async (dispatch) =>{
         }, {
             headers:{auth:token}
         });
-        dispatch(alertOpen("Post criado !!", 'error'))
+        dispatch(alertOpen("Post criado !!"))
+        dispatch(fetchPosts())
     }catch(error){
         console.error("Erro ->",error.message);
         dispatch(alertOpen("Oops, o post não foi criado!", 'error'))
