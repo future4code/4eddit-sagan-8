@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import styled from 'styled-components'
 import {connect} from "react-redux";
 import {fetchPosts, votePost} from "../../actions/posts/posts";
-
 import CardHeader from "@material-ui/core/CardHeader";
 import {CardContent, Typography} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
@@ -10,6 +9,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import {goToPostDetail} from '../../actions/posts/detail'
 
 const Title = styled(Typography)`
     padding:30px 30px;
@@ -18,7 +18,7 @@ const CardWrapper = styled.div`
     display:grid;    
     grid-template-rows:1fr 2rem;
     text-align:center;  
-    
+    cursor: pointer;
 `;
 const VotesWrapper = styled.div`
     display:flex;    
@@ -67,7 +67,7 @@ class GridPosts extends Component{
                 <Title variant="h4" style={{textAlign: "center"}}>Posts Populares</Title>
                 {this.props.posts.map(post => {
                     return(
-                        <CardWrapper key={post.id}>
+                        <CardWrapper key={post.id} onClick={() => this.props.goToDetail(post.id)}>
                             <Card>
                                  <UserWrapper>
                                      <AccountCircleIcon />
@@ -105,7 +105,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>{
     return{
         fetchPosts: () => dispatch(fetchPosts()),
-        votePost: (direction, id) => dispatch(votePost(direction,id))
+        votePost: (direction, id) => dispatch(votePost(direction,id)),
+        goToDetail: (id) => dispatch(goToPostDetail(id))
     }
 };
 
