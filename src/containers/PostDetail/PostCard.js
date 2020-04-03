@@ -1,33 +1,43 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import UserIcon from '../../img/Icon4eddit.png';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Badge from '@material-ui/core/Badge';
 import { red } from '@material-ui/core/colors';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import CommentIcon from '@material-ui/icons/Comment';
 import PostComments from './PostComments'
 import { connect } from 'react-redux';
-import { votePost } from '../../actions/posts/detail';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
+import PostActions from './CardActions/PostActions'
+import { addComment } from '../../actions/posts/detail'
 
-const useStyles = makeStyles((theme) => ({
+const CommentWrapper = styled.div`
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  > * {
+    margin: 5px !important;
+  }
+`
+
+const useStyles = ((theme) => ({
   root: {
     margin: '100px auto',
-    maxWidth: '80%',
-    width: '400px',
+    maxWidth: '90%',
+    width: '410px',
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%', // 16:9 (?)
+  },
+  avatar: {
+    backgroundColor: red[500],
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -39,123 +49,95 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
 }));
 
-const Votes = styled.div`
-  font-size: 0.8rem;
-  margin: 2px;
-`
+class PostCard extends React.Component {
 
-// TODO O Export default deve acontecer apos conectar o componente ao redux
-function PostCard(props) {// TODO Adicionar props no parametro da function
-
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
-  const { post } = props
-
-  const handleLike = (direction) => {
-    if (post.userVoteDirection === direction) {
-      props.votePost(0, post.id)
-    } else {
-      props.votePost(direction, post.id)
+  constructor(props) {
+    super(props)
+    this.state = {
+      comment: '',
+      showComments: false,
     }
-  };
+  }
 
-  //TODO Criar uma const vinda da props.post via description 
-  // Ex: const { myProp } = props
+  componentDidUpdate(prevProps) {
+    if (this.props.post && prevProps.post) {
+      if (prevProps.post.commentsCount < this.props.post.commentsCount) {
+        this.setState({comment: '', showComments: true})
+      }
+    }
+  }
 
-  // TODO Usar referencia deste json
-  /*
-  {
-   "post":{
-      "comments":[
-         {
-            "votesCount":0,
-            "userVoteDirection":0,
-            "id":"LGFVplqhBcJ1yzOhN3Uf",
-            "username":"vinicius",
-            "text":"buenos dias",
-            "createdAt":1585748175082
-         }
-      ],
-      "votesCount":0,
-      "userVoteDirection":0,
-      "commentsCount":1,
-      "id":"AvrNAJxtsq6vrslQ0gbL",
-      "username":"darvas",
-      "text":"asdasdasdasdasdas",
-      "createdAt":1580328992711,
-      "title":"Titulo!"
-   }
-}
-  */
+  onExpanded = () => {
+    this.setState({ showComments: !this.state.showComments })
+  }
 
-  return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <img
-            src={UserIcon}
-            height="auto"
-          />
+  handleChange = (e) => {
+    this.setState({
+      comment: e.target.value
+    })
+  }
 
-        }
-        title={post.title}
-        subheader={post.username}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {post.text}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="vote up" onClick={() => handleLike(1)}>
-          <ArrowUpwardIcon color={post.userVoteDirection === 1 ? "secondary" : ""}/>
-        </IconButton>
-        <Votes>{post.votesCount}</Votes>
-        <IconButton aria-label="vote down" onClick={() => handleLike(-1)}>
-          <ArrowDownwardIcon color={post.userVoteDirection === -1 ? "primary" : ""} />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <Badge badgeContent={String(post.commentsCount)} className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })} color="primary">
-            <CommentIcon className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })} />
-          </Badge>
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+  addComment = () => {
+    if (this.state.comment) {
+      this.props.saveComment(this.state.comment, this.props.post.id)
+    }
+  }
+
+  render() {
+    const { post, classes } = this.props
+    const { showComments } = this.state
+    return (
+      <Card className={classes.root} >
+        <CardHeader
+          avatar={<img src={UserIcon} height="auto" alt={post.username} />}
+          title={post.title}
+          subheader={post.username}
+        />
         <CardContent>
-          <PostComments /> {/* TODO adicionar uma prop para passar o array de comentarios  */}
+          <Typography variant="body2" color="textSecondary" component="p">
+            {post.text}
+          </Typography>
         </CardContent>
-      </Collapse>
-    </Card>
-  );
+        <PostActions
+          classes={classes}
+          post={post}
+          expanded={showComments}
+          onExpanded={this.onExpanded}
+        />
+        <CommentWrapper>
+          <TextField
+            id="comment"
+            label="Adicionar comentário"
+            multiline
+            rowsMax="4"
+            value={this.state.comment}
+            onChange={this.handleChange}
+            variant="filled"
+            size="small"
+          />
+          <Button 
+            variant="contained" 
+            color="primary"
+            size="small" 
+            onClick={this.addComment}
+          >
+            Comentar
+          </Button>
+        </CommentWrapper>
+        <Collapse in={showComments} timeout="auto" unmountOnExit>
+          <CardContent>
+            <PostComments classes={classes} comments={post.comments} postId={post.id} />
+          </CardContent>
+        </Collapse>
+      </Card>
+    );
+  }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  votePost: (direction, id) => dispatch(votePost(direction,id)),
+  saveComment: (comment, postId) => dispatch(addComment(comment, postId)),
 })
-export default connect(null, mapDispatchToProps)(PostCard)
 
-/* TODO Conectar o componente à store via connect(null, fn1)(PostCard),
-  sendo null o mapper de state to props (o post ja vem preenchido em props.post)
-  sendo fn2 uma funcao para mapear o dispatch de votação(up, down) para o post
-*/
+export default withStyles(useStyles)(connect(null, mapDispatchToProps)(PostCard))
