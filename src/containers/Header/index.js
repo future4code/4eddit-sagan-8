@@ -5,6 +5,9 @@ import MenuHeader from "./Menu";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
+import { routes } from '../Router';
 
 const HeaderWrapper = styled.header`
     position:fixed;
@@ -26,13 +29,14 @@ justify-content:space-between;
 
 const Logo = styled.img`
     height:8vh;
+    cursor:pointer;
 `;
 
 class Header extends React.Component{
     render(){
         return(
             <HeaderWrapper>
-                <Logo src={require("../../img/Icon4eddit.png")} />
+                <Logo src={require("../../img/Icon4eddit.png")} onClick = {this.props.goToHome} />
                 <Search>
                 <TextField
                     id="input-with-icon-textfield"
@@ -54,4 +58,8 @@ class Header extends React.Component{
     }
 }
 
-export default Header
+const mapDispatchToProps = (dispatch) => ({
+  goToHome: () => dispatch(push(routes.postFeed))
+}) 
+
+export default connect(null, mapDispatchToProps) (Header)
