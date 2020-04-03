@@ -1,22 +1,21 @@
 import axios from 'axios';
+import { alertOpen } from '../user/snackbar'
 
 const baseUrl = "https://us-central1-future-apis.cloudfunctions.net/fourEddit/posts";
 
-export const createNewPost = post => async (dispatch) =>{
+export const createNewPost = (text , title) => async (dispatch) =>{
     try{
-        const newPost = {
-                text: post.text,
-                title: post.title
-        };
-
         const token = localStorage.getItem('token');
-        await axios.post(`${baseUrl}`, newPost, {
+        await axios.post(`${baseUrl}`, {
+            "text" : text,
+            "title":title
+        }, {
             headers:{auth:token}
         });
-        alert("Post Criado com Sucesso !")
+        dispatch(alertOpen("Post criado !!", 'error'))
     }catch(error){
         console.error("Erro ->",error.message);
-        alert("Ops, o post não foi criado!!")
+        dispatch(alertOpen("Oops, o post não foi criado!", 'error'))
     }
 };
 
@@ -38,7 +37,6 @@ const setListPosts = (posts) => ({
 
 export const votePost = (direction, id) => async(dispatch)=>{
   try{
-      console.log(direction);
       const token = localStorage.getItem('token');
       await axios.put(`${baseUrl}/${id}/vote`, {
           "direction": direction

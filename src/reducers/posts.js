@@ -1,6 +1,6 @@
 const initialState = {
-    posts:[],
-    votes:[]
+    posts:[]
+
 };
 
 export const allPosts = (state = initialState, action) =>{
