@@ -11,6 +11,7 @@ const Link = styled.a`
     text-decoration:none;
 `;
 
+// Mudanças aqui!
 function MenuHeader(props) {
   const menuClick = (url, popupState) => {
     popupState.close()
@@ -22,8 +23,7 @@ function MenuHeader(props) {
     props.logout()
   }
 
-  const {isLogged} = props
-
+  const { isLogged } = props
 
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
@@ -31,12 +31,12 @@ function MenuHeader(props) {
         <React.Fragment>
           <Button variant="contained" color="primary" size="small" style={{ marginLeft: "1vw" }} {...bindTrigger(popupState)}>
             Open Menu
-                    </Button>
+          </Button>
           <Menu {...bindMenu(popupState)}>
             <MenuItem onClick={() => menuClick(routes.root, popupState)}>Home</MenuItem>
-           {!isLogged && <MenuItem onClick={() => menuClick(routes.login, popupState)}>Fazer Login</MenuItem>}
-           {!isLogged && <MenuItem onClick={() => menuClick(routes.register, popupState)}>Cadastrar</MenuItem>}
-           {isLogged && <MenuItem onClick={() => logout(popupState)}>Logout</MenuItem>}
+            {!isLogged && <MenuItem onClick={() => menuClick(routes.login, popupState)}>Fazer Login</MenuItem>}
+            {!isLogged && <MenuItem onClick={() => menuClick(routes.register, popupState)}>Cadastrar</MenuItem>}
+            {isLogged && <MenuItem onClick={() => logout(popupState)}>Logout</MenuItem>}
           </Menu>
         </React.Fragment>
       )}

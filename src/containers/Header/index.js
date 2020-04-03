@@ -21,7 +21,7 @@ const HeaderWrapper = styled.header`
     padding: 0 2vw;  
 `;
 
-const Search = styled.div `
+const Search = styled.div`
 display:flex;
 align-items:center;
 justify-content:space-between;
@@ -32,34 +32,35 @@ const Logo = styled.img`
     cursor:pointer;
 `;
 
-class Header extends React.Component{
-    render(){
-        return(
-            <HeaderWrapper>
-                <Logo src={require("../../img/Icon4eddit.png")} onClick = {this.props.goToHome} />
-                <Search>
-                <TextField
-                    id="input-with-icon-textfield"
-                    label="Buscar"
-                    variant="filled"
-                    size="small"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                <MenuHeader />
-                </Search>
-            </HeaderWrapper>
-        )
-    }
+// Mudanças aqui!
+class Header extends React.Component {
+  render() {
+    return (
+      <HeaderWrapper>
+        <Logo src={require("../../img/Icon4eddit.png")} onClick={this.props.goToHome} />
+        <Search>
+          <TextField
+            id="input-with-icon-textfield"
+            label="Buscar"
+            variant="filled"
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <MenuHeader />
+        </Search>
+      </HeaderWrapper>
+    )
+  }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   goToHome: () => dispatch(push(routes.postFeed))
-}) 
+})
 
-export default connect(null, mapDispatchToProps) (Header)
+export default connect(null, mapDispatchToProps)(Header)
