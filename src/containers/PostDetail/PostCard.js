@@ -9,11 +9,15 @@ import Collapse from '@material-ui/core/Collapse';
 import UserIcon from '../../img/Icon4eddit.png';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Badge from '@material-ui/core/Badge';
 import { red } from '@material-ui/core/colors';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CommentIcon from '@material-ui/icons/Comment';
 import PostComments from './PostComments'
+import { connect } from 'react-redux';
+import { votePost } from '../../actions/posts/detail';
+import styled from 'styled-components';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,8 +44,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const Votes = styled.div`
+  font-size: 0.8rem;
+  margin: 2px;
+`
+
 // TODO O Export default deve acontecer apos conectar o componente ao redux
-export default function RecipeReviewCard(props) {// TODO Adicionar props no parametro da function
+function PostCard(props) {// TODO Adicionar props no parametro da function
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -49,7 +58,16 @@ export default function RecipeReviewCard(props) {// TODO Adicionar props no para
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   const { post } = props
+
+  const handleLike = (direction) => {
+    if (post.userVoteDirection === direction) {
+      props.votePost(0, post.id)
+    } else {
+      props.votePost(direction, post.id)
+    }
+  };
 
   //TODO Criar uma const vinda da props.post via description 
   // Ex: const { myProp } = props
@@ -70,7 +88,7 @@ export default function RecipeReviewCard(props) {// TODO Adicionar props no para
       ],
       "votesCount":0,
       "userVoteDirection":0,
-      "commentsNumber":1,
+      "commentsCount":1,
       "id":"AvrNAJxtsq6vrslQ0gbL",
       "username":"darvas",
       "text":"asdasdasdasdasdas",
@@ -90,8 +108,8 @@ export default function RecipeReviewCard(props) {// TODO Adicionar props no para
           />
 
         }
-        title={post.title} 
-        subheader={post.username} 
+        title={post.title}
+        subheader={post.username}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -99,12 +117,12 @@ export default function RecipeReviewCard(props) {// TODO Adicionar props no para
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="vote up"> {/* TODO Adicionar funcao de votacao(+1) no onClick */}
-          <ArrowUpwardIcon />
+        <IconButton aria-label="vote up" onClick={() => handleLike(1)}>
+          <ArrowUpwardIcon color={post.userVoteDirection === 1 ? "secondary" : ""}/>
         </IconButton>
-        {/* TODO Adicionar contador de votos */}
-        <IconButton aria-label="vote down"> {/* TODO Adicionar funcao de votacao(-1) no onClick  */}
-          <ArrowDownwardIcon />
+        <Votes>{post.votesCount}</Votes>
+        <IconButton aria-label="vote down" onClick={() => handleLike(-1)}>
+          <ArrowDownwardIcon color={post.userVoteDirection === -1 ? "primary" : ""} />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
@@ -114,7 +132,13 @@ export default function RecipeReviewCard(props) {// TODO Adicionar props no para
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <CommentIcon /> {/* TODO Usar um Badge(mui) com o total de comentarios */}
+          <Badge badgeContent={String(post.commentsCount)} className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })} color="primary">
+            <CommentIcon className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })} />
+          </Badge>
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -125,6 +149,11 @@ export default function RecipeReviewCard(props) {// TODO Adicionar props no para
     </Card>
   );
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  votePost: (direction, id) => dispatch(votePost(direction,id)),
+})
+export default connect(null, mapDispatchToProps)(PostCard)
 
 /* TODO Conectar o componente à store via connect(null, fn1)(PostCard),
   sendo null o mapper de state to props (o post ja vem preenchido em props.post)

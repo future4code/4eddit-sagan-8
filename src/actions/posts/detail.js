@@ -21,6 +21,20 @@ export const fetchPost = (id) => async(dispatch, getState) =>{
 
 
 export const goToPostDetail = postId => async (dispatch) =>{
-  dispatch (fetchPost(postId))
+  await dispatch (fetchPost(postId))
   dispatch (push(routes.PostDetail))
+};
+
+export const votePost = (direction, id) => async(dispatch)=>{
+  try{
+      const token = localStorage.getItem('token');
+      await axios.put(`${baseUrl}/${id}/vote`, {
+          "direction": direction
+      }, {
+          headers:{auth:token}
+      });
+      dispatch(fetchPost(id))
+  }catch(error){
+      console.error("Erro ->", error.message)
+  }
 };
