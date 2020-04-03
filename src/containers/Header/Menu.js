@@ -1,8 +1,12 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import styled from 'styled-components'
+
+import {Menu, MenuItem, Button} from '@material-ui/core';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+
+const Link = styled.a`
+    text-decoration:none
+`;
 
 function MenuHeader() {
     return (
@@ -13,14 +17,14 @@ function MenuHeader() {
                         Open Menu
                     </Button>
                     <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={popupState.close}>Fazer Login</MenuItem>
-                        <MenuItem onClick={popupState.close}>Cadastrar</MenuItem>
+                        <MenuItem onClick={popupState.close}><Link href={"/"}>Home</Link></MenuItem>
+                        <MenuItem onClick={popupState.close}><Link href={"/login"}>Fazer Login</Link></MenuItem>
+                        <MenuItem onClick={popupState.close}><Link href={"/register"}>Cadastrar</Link></MenuItem>
                     </Menu>
                 </React.Fragment>
             )}
         </PopupState>
     );
 }
-
 
 export default MenuHeader

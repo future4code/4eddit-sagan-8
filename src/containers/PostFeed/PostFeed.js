@@ -5,8 +5,9 @@ import {TextField, Button} from "@material-ui/core";
 import {connect} from "react-redux";
 import { push } from 'connected-react-router';
 import {routes} from "../Router";
-import {createNewPost} from "../../actions/posts/posts";
+import {createNewPost, fetchPosts} from "../../actions/posts/posts";
 
+import {Button, Input} from "@material-ui/core";
 
 
 const PostFeedWrapper = styled.div`
@@ -17,23 +18,21 @@ const PostFeedWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 const FormNewPost = styled.form`
     display:grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     grid-gap:10px;
     margin-bottom:20px;
-`
+`;
 
 class PostFeed extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            post: {
                 title: "",
                 text: "",
-            }
         }
     }
 
@@ -44,57 +43,60 @@ class PostFeed extends Component{
         }
     }
 
-    handleClick = () => {
-        this.props.createNewPost(this.state.post)
+    handleCreatePost = () => {
+        this.props.createNewPost(this.state.text, this.state.title);
+        this.setState({
+            title:"",
+            text:""
+        });
+        this.props.fetchPosts()
     };
 
     handleChangeTitle = (event) =>{
         this.setState({
-            post:{
                 title: event.target.value
-            }
         })
     };
 
     handleChangeText = (event) =>{
         this.setState({
-            post:{
                 text: event.target.value
-            }
         })
     };
 
     render(){
         return(
-            <div>
                 <PostFeedWrapper>
                     <FormNewPost>
-                    <TextField
-                        onChange={this.handleChangeTitle}
-                        id="title"
-                        label="Título do Post"
-                        variant="outlined"
-                        color="primary"
-                    />
-                        <TextField
-                            onChange={this.handleChangeText}
-                            id="text"
-                            label="Texto do Post"
-                            variant="outlined"
+                        <Input
+                            onChange={this.handleChangeTitle}
+                            id="title"
+                            placeholder="Título do Post"
+                            variant="filled"
                             color="primary"
+                            value={this.state.title}
+                            required={true}
                         />
+                            <Input
+                                onChange={this.handleChangeText}
+                                id="text"
+                                placeholder="Texto do Post"
+                                variant="outlined"
+                                color="primary"
+                                value={this.state.text}
+                                required={true}
+                            />
                     </FormNewPost>
-                    <Button color="primary" variant="contained" type={"submit"} onClick={this.handleClick} >Criar Post</Button>
+                    <Button color="primary" variant="contained" type={"submit"} onClick={this.handleCreatePost} >Criar Post</Button>
                     <GridPosts />
-
                 </PostFeedWrapper>
-            </div>
         )
     }
 }
 
 const mapDispatchToProps = (dispatch) =>({
-    createNewPost: (post) => dispatch(createNewPost(post)),
+    createNewPost: (text, title) => dispatch(createNewPost(text, title)),
+    fetchPosts: () => dispatch(fetchPosts),
     login: () => dispatch(push(routes.login)),
 });
 
