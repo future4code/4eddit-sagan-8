@@ -11,7 +11,12 @@ import UserIcon from "../../img/Icon4eddit.png";
 import PostActions from "../PostFeed/CardActions";
 import {withStyles} from "@material-ui/core/styles";
 
-const CardWrapper = styled.div`    
+const CardList = styled.ul`
+  margin: 0;
+  padding: 0;
+`
+const CardWrapper = styled.li`
+  list-style: none;    
 `;
 
 const Title = styled.div`
@@ -20,8 +25,8 @@ const Title = styled.div`
 
 const useStyles = ((theme) => ({
     root: {
-        margin: '100px auto',
-        maxWidth: '90%',
+        margin: '20px auto',
+        maxWidth: '90vw',
         width: '410px',
     },
     media: {
@@ -55,10 +60,12 @@ class GridPosts extends Component{
                 <Title>
                     <Typography variant="h4" style={{textAlign: "center"}}>Posts Populares</Typography>
                 </Title>
+                <CardList>
                 {this.props.posts.map(post => {
                     return(
-                        <CardWrapper onClick={() => this.props.goToDetail(post.id)}>
-                            <Card className={classes.root} key={post.id} >
+                        <CardWrapper key={post.id}>
+                            <Card className={classes.root} >
+                              <div style={{cursor: 'pointer'}} onClick={() => this.props.goToDetail(post.id)}>
                                 <CardHeader
                                     avatar={<img src={UserIcon} height="auto" alt={post.username} />}
                                     title={post.title}
@@ -69,14 +76,16 @@ class GridPosts extends Component{
                                         {post.text}
                                     </Typography>
                                 </CardContent>
-                                <PostActions
-                                    classes={classes}
-                                    post={post}
-                                />
+                              </div>
+                              <PostActions
+                                  classes={classes}
+                                  post={post}
+                              />
                             </Card>
                         </CardWrapper>
                     )
                 })}
+                </CardList>
             </div>
         )
     }

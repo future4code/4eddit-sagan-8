@@ -91,6 +91,7 @@ class PostFeed extends Component{
                                 placeholder="Texto do Post"
                                 variant="outlined"
                                 color="primary"
+                                multiline
                                 value={this.state.text}
                                 required={true}
                             />

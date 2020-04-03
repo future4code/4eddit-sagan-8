@@ -10,8 +10,7 @@ export const allPosts = (state = initialState, action) => {
     case "SET_POSTS":
       return {
         ...state,
-        posts: action.payload.postList,
-        loading: false
+        loading: false,
         posts: action.payload.postList.sort((a, b) => b.createdAt - a.createdAt)
       }
         ;

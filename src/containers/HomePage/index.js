@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { connect } from "react-redux";
 import { push } from 'connected-react-router';
+import { routes } from '../Router';
 
 const HomePageWrapper = styled.div`
   padding: 20px;
@@ -37,7 +38,17 @@ class HomePage extends Component{
           <div>
             <HomePageWrapper>
                 <Logo src={require("../../img/Logo4eddit.jpeg")}/>
-                <div>
+                {this.props.isLogged && <div>
+                  <Button
+                    color={"secondary"}
+                    variant="outlined"
+                    style={{ margin: "15px" }}
+                    onClick={this.props.feed}
+                  >
+                      Ir para o Feed
+                  </Button>
+                </div>}
+                {!this.props.isLogged && <div>
                     <Button
                         color={"secondary"}
                         variant="outlined"
@@ -54,16 +65,21 @@ class HomePage extends Component{
                      >
                         Cadastro
                     </Button>
-                </div>
+                </div>}
             </HomePageWrapper>
             </div>
         )
     }
 }
 
+const mapStateToProps = (state) => ({
+  isLogged: state.user.token
+})
+
 const mapDispatchToProps = (dispatch) => ({
-    login: () => dispatch(push("/login")),
-    register: () => dispatch(push("/register"))
+    login: () => dispatch(push(routes.login)),
+    register: () => dispatch(push(routes.registerPage)),
+    feed: () => dispatch(push(routes.postFeed))
 });
 
-export default connect(null, mapDispatchToProps)(HomePage)
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
